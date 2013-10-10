@@ -33,19 +33,19 @@ const (
 	BAD_QUERY_DURATION time.Duration = time.Minute * 15
 )
 
-type NodeID []byte
+type ID []byte
 
-func (id NodeID) Int() *big.Int {
+func (id ID) Int() *big.Int {
 	return big.NewInt(0).SetBytes(id)
 }
 
-func (id NodeID) String() string {
+func (id ID) String() string {
 	return hex.EncodeToString(id)
 }
 
-func BiggestNodeID() NodeID {
+func BiggestID() ID {
 
-	biggestID := SmallestNodeID()
+	biggestID := SmallestID()
 
 	for i := range biggestID {
 		biggestID[i] = math.MaxUint8
@@ -54,18 +54,18 @@ func BiggestNodeID() NodeID {
 	return biggestID
 }
 
-func SmallestNodeID() NodeID {
+func SmallestID() ID {
 	return make([]byte, 20)
 }
 
 type Node struct {
-	id            NodeID
+	id            ID
 	lastQuery     time.Time
 	lastResponse  time.Time
 	onceResponded bool
 }
 
-func New(id NodeID) *Node {
+func New(id ID) *Node {
 
 	initTime := badTime()
 
@@ -107,11 +107,11 @@ func (n Node) IsGood() bool {
 In Kademlia, the distance metric is XOR and the result is interpreted as an unsigned integer.
 distance(A,B) = |A xor B| Smaller values are closer.
 */
-func (n Node) Distance(id NodeID) *big.Int {
+func (n Node) Distance(id ID) *big.Int {
 	return big.NewInt(0).Xor(n.id.Int(), id.Int())
 }
 
-func (n Node) ID() NodeID {
+func (n Node) ID() ID {
 	return n.id
 }
 
@@ -146,7 +146,7 @@ func badTime() time.Time {
 	return time.Now().Add(-BAD_QUERY_DURATION)
 }
 
-func GenerateID() NodeID {
+func GenerateID() ID {
 
 	hash := sha1.New()
 

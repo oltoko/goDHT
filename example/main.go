@@ -34,7 +34,7 @@ func main() {
 
 	fmt.Println("--------------")
 
-	biggestID := node.BiggestNodeID()
+	biggestID := node.BiggestID()
 	fmt.Println(biggestID.String())
 	fmt.Println(biggestID.Int().String())
 

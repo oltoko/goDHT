@@ -38,8 +38,8 @@ func load() []bucket {
 
 	// An empty table has one bucket with an ID space range of min=0, max=2^160
 	buckets[0] = bucket{
-		min:         node.SmallestNodeID().Int(),
-		max:         node.BiggestNodeID().Int(),
+		min:         node.SmallestID().Int(),
+		max:         node.BiggestID().Int(),
 		nodes:       make(map[string]*node.Node),
 		lastChanged: time.Now(),
 	}

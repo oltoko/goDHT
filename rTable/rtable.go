@@ -76,13 +76,13 @@ func manage() {
 
 type GetNode struct {
 	Callback chan *node.Node
-	ID       node.NodeID
+	ID       node.ID
 }
 
 type bucket struct {
 	min         *big.Int
 	max         *big.Int
-	nodes       map[string]*node.Node // The Key is the NodeID as String
+	nodes       map[string]*node.Node // The Key is the ID as String
 	lastChanged time.Time
 }
 
@@ -95,7 +95,7 @@ func (b bucket) isFull() bool {
 	}
 }
 
-func (b bucket) match(id node.NodeID) bool {
+func (b bucket) match(id node.ID) bool {
 
 	/* When a node with ID "N" is inserted into the table,
 	it is placed within the bucket that has min <= N < max. */
@@ -185,7 +185,7 @@ func addNode(n *node.Node) bool {
 	return false
 }
 
-func getNode(id node.NodeID) *node.Node {
+func getNode(id node.ID) *node.Node {
 
 	var result *node.Node
 	result = nil
